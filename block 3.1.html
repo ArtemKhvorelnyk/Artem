@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Запис математичних формул від руки</title>
+  <style>
+    #canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Запис математичних формул від руки</h1>
+  <canvas id="canvas" width="600" height="400"></canvas>
+  <br>
+  <button onclick="clearCanvas()">Очистити</button>
+
+  <script>
+    // Отримання посилання на елемент canvas
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+
+    // Змінна, що показує, чи натиснута кнопка миші
+    var isDrawing = false;
+
+    // Функція, яка розпочинає малювання при натисканні кнопки миші
+    function startDrawing(event) {
+      isDrawing = true;
+      context.beginPath();
+      context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+    }
+
+    // Функція, яка зупиняє малювання при відпусканні кнопки миші
+    function stopDrawing() {
+      isDrawing = false;
+    }
+
+    // Функція, яка малює лінії під час переміщення миші
+    function draw(event) {
+      if (!isDrawing) return;
+      context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+      context.stroke();
+    }
+
+    // Функція для очищення полотна
+    function clearCanvas() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Додавання обробників подій до canvas
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+  </script>
+</body>
+</html>
